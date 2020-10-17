@@ -8,6 +8,7 @@
             padding: 0;
             margin: 0;
             box-sizing: border-box;
+            transition: 100ms linear;
         }
 
         html, body {
@@ -44,11 +45,15 @@
             background-color: #3b4252;
         }
 
-        tbody tr{
+        tbody tr {
             cursor: pointer;
         }
 
-        tbody td{
+        tbody tr:hover {
+            background-color: #4c566A;
+        }
+
+        tbody td {
             padding: .5rem 0;
         }
 
@@ -56,11 +61,11 @@
             color: #4c566A;
         }
 
-        tbody .activated {
+        tbody .activated,tbody .activated:hover {
             background-color: #A3BE8C;
         }
 
-        tbody .deactivated {
+        tbody .deactivated ,tbody .deactivated:hover {
             background-color: #BF616A;
         }
 
