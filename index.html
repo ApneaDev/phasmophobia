@@ -5,641 +5,641 @@
     <title>Phasmophobia</title>
     <style>
         * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            transition: 100ms linear;
+            box-sizing : border-box;
+            margin     : 0;
+            padding    : 0;
+            transition : 100ms linear;
         }
 
         html, body {
-            font-size: 16px;
-            line-height: 1.4rem;
-            font-family: sans-serif;
-            background-color: #2e3440;
-            color: #d8dee9;
-            width: 100%;
-            padding: 1rem 1rem 25vh 0;
+            background-color : #2e3440;
+            color            : #d8dee9;
+            font-family      : sans-serif;
+            font-size        : 16px;
+            line-height      : 1.4rem;
+            padding          : 1rem 1rem 25vh 0;
+            width            : 100%;
         }
 
         table {
-            border-collapse: collapse;
-            width: 100%;
-            margin: 1rem;
+            border-collapse : collapse;
+            margin          : 1rem;
+            width           : 100%;
         }
 
         table .header {
-            color: #eceff4;
-            text-align: left;
+            color      : #eceff4;
+            text-align : left;
         }
 
         thead .header th {
-            padding: .25rem;
+            padding : .25rem;
         }
 
         td, th {
-            padding: .25rem;
-            text-align: center;
+            padding    : .25rem;
+            text-align : center;
         }
 
         tr:nth-child(even) {
-            background-color: #3b4252;
+            background-color : #3b4252;
         }
 
         tbody tr {
-            cursor: pointer;
+            cursor : pointer;
         }
 
         tbody tr:hover {
-            background-color: #4c566A;
+            background-color : #4c566a;
         }
 
         tbody td {
-            padding: .5rem 0;
+            padding : .5rem 0;
         }
 
         .excluded {
-            color: #4c566A;
+            color : #4c566a;
         }
 
-        tbody .activated,tbody .activated:hover {
-            background-color: #A3BE8C;
+        tbody .activated, tbody .activated:hover {
+            background-color : #a3be8c;
         }
 
-        tbody .deactivated ,tbody .deactivated:hover {
-            background-color: #BF616A;
+        tbody .deactivated, tbody .deactivated:hover {
+            background-color : #bf616a;
         }
 
         .activated > .header, .deactivated > .header {
-            color: #2e3440;
+            color : #2e3440;
         }
 
         #infos {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            width: 100%;
-            margin: auto;
+            display        : flex;
+            flex-direction : row;
+            flex-wrap      : wrap;
+            margin         : auto;
+            width          : 100%;
         }
 
         #infos > div {
-            display: flex;
-            flex-direction: column;
-            width: 20vw;
-            padding: 1rem;
-            margin: 1rem;
-            background-color: #3b4252;
+            background-color : #3b4252;
+            display          : flex;
+            flex-direction   : column;
+            margin           : 1rem;
+            padding          : 1rem;
+            width            : 20vw;
         }
 
         #infos span {
-            display: block;
-            margin-bottom: 1rem;
+            display       : block;
+            margin-bottom : 1rem;
         }
 
         h1 {
-            color: #eceff4;
-            padding: 1rem 0 0 1rem;
+            color   : #eceff4;
+            padding : 1rem 0 0 1rem;
         }
 
         h2 {
-            padding-bottom: 1rem;
+            padding-bottom : 1rem;
         }
 
         #infos .excluded {
-            display: none;
+            display : none;
         }
     </style>
 </head>
 <body>
 <h1>Phasmophobia</h1>
 <script type="application/javascript">
-    let app = {
-        language:         'de',
-        state:            {},
-        ghosts:           {
-            spirit:      {
-                name:        {
-                    en: 'Spirit',
-                    de: 'Spirit',
-                },
-                description: {
-                    text:     {
-                        en: 'A spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death.',
-                        de: 'Der Spirit ist eine der gewöhnlichsten Geisterarten, jedoch ist er sehr stark und gefährlich. Sie werden für gewöhnlich in einem Gebiet gefunden in dem der Tod einer Person unaufgeklärt blieb. ',
-                    },
-                    strength: {
-                        en: '',
-                        de: '',
-                    },
-                    weakness: {
-                        en: 'Using Smudge Sticks on a Spirit will stop it attacking for a long period of time.',
-                        de: 'Kann vorübergehend gestoppt werden, indem man den Geisterraum ausräuchert.',
-                    }
-                },
-                evidence:    [
-                    'box', 'finger', 'book'
-                ],
-            },
-            wraith:      {
-                name:        {
-                    en: 'Wraith',
-                    de: 'Gespenst',
-                },
-                description: {
-                    text:     {
-                        en: 'A wraith is one of the most dangerous Ghosts you will find. It is also the only known Ghost that has the ability of flight and has sometimes been known to travel through walls.',
-                        de: 'Ein Gespenst ist einer der gefährlichsten Geister die Sie finden werden. Er ist auch bekannt als der Geist, der fliegen und durch Wände gehen kann.',
-                    },
-                    strength: {
-                        en: 'Wraiths almost never touch the ground meaning it can\'t be tracked by footsteps.',
-                        de: 'Ein Gespenst berührt nie den Boden wodurch er nicht durch Fußabdrücke gefunden werden kann.',
-                    },
-                    weakness: {
-                        en: 'Wraiths have a toxic reaction to Salt.',
-                        de: 'Giftige Reaktion zu Salz.',
-                    }
-                },
-                evidence:    [
-                    'finger', 'temp', 'box'
-                ],
-            },
-            phantom:     {
-                name:        {
-                    en: 'Phantom',
-                    de: 'Phantom',
-                },
-                description: {
-                    text:     {
-                        en: 'A Phantom is a Ghost that can possess the living, most commonly summoned by a Ouija Board. It also induces fear into those around it.',
-                        de: 'Ein Phantom ist ein Geist, der von den Lebenden Besitz ergreifen kann. Meistens beschworen durch das Ouijaboard. Verursacht Angst in den Menschen um ihn herum. ',
-                    },
-                    strength: {
-                        en: 'Looking at a Phantom will considerably drop your sanity.',
-                        de: 'Senkt ihren Verstand stark wenn Sie das Phantom anschauen.',
-                    },
-                    weakness: {
-                        en: 'Taking a photo of the Phantom will make it temporarily disappear.',
-                        de: 'Fotografieren Sie das Phantom, verschwindet es temporär.',
-                    }
-                },
-                evidence:    [
-                    'emf', 'orb', 'temp'
-                ],
-            },
-            poltergeist: {
-                name:        {
-                    en: 'Poltergeist',
-                    de: 'Poltergeist',
-                },
-                description: {
-                    text:     {
-                        en: 'One of the most famous Ghosts, a Poltergeist, also known as a noisy ghost can manipulate objects around it to spread fear into it\'s victims.',
-                        de: 'Einer der berühmtesten Geister. Ein Poltergeist ist bekannt als ein Wesen das laut ist und Objekte um sich herum manipuliert um seinen Opfern Angst einzujagen.',
-                    },
-                    strength: {
-                        en: 'A Poltergeist can throw huge amounts of objects at once.',
-                        de: 'Ein Poltergeist kann viele Objekte auf einmal werfen.',
-                    },
-                    weakness: {
-                        en: 'A Poltergeist is almost ineffective in an empty room.',
-                        de: 'Ein Poltergeist ist in einem leeren Raum fast ineffektiv',
-                    }
-                },
-                evidence:    [
-                    'box', 'finger', 'orb'
-                ],
-            },
-            banshee:     {
-                name:        {
-                    en: 'Banshee',
-                    de: 'Banshee',
-                },
-                description: {
-                    text:     {
-                        en: 'A Banshee is a natural hunter and will attack anything. It has been known to stalk it\'s prey one at a time until making it\'s kill.',
-                        de: 'Die Banshee ist ein Jäger und wird alles attackieren. Es ist bekannt seine Opfer zu stalken bis es jemanden tötet.',
-                    },
-                    strength: {
-                        en: 'A Banshee will only target one person at a time.',
-                        de: 'Eine Banshee wird jeweils nur eine Person jagen.',
-                    },
-                    weakness: {
-                        en: 'Banshees fear the Crucifix and will be less aggressive when near one.',
-                        de: 'Banshees fürchten das Kruzifix und sind weniger aggressiv in seinem Umkreis.',
-                    }
-                },
-                evidence:    [
-                    'emf', 'finger', 'temp'
-                ],
-            },
-            jinn:        {
-                name:        {
-                    en: 'Jinn',
-                    de: 'Dschinn',
-                },
-                description: {
-                    text:     {
-                        en: 'A Jinn is a territorial Ghost that will attack when threatened. It has also been known to be able to travel at significant speed.',
-                        de: 'Ein Dschinn ist ein territorialer Geist der bei Bedrängnis angreift. Er ist ebenfalls bekannt dafür, sich mit hoher Geschwindigkeit zu bewegen.',
-                    },
-                    strength: {
-                        en: 'A Jinn will travel at a faster speed if it\'s victim is far away.',
-                        de: 'Ein Dschinn bewegt sich schneller wenn sein Opfer weit weg ist.',
-                    },
-                    weakness: {
-                        en: 'Turning off the locations power source will prevent the Jinn from using it\'s ability.',
-                        de: 'Dem Ort seinen Strom zu entziehen hindert den Dschinn am nutzen seiner Fähigkeiten.',
-                    }
-                },
-                evidence:    [
-                    'box', 'orb', 'emf'
-                ],
-            },
-            mare:        {
-                name:        {
-                    en: 'Mare',
-                    de: 'Mare',
-                },
-                description: {
-                    text:     {
-                        en: 'A Mare is the source of all nightmares, making it most powerful in the dark.',
-                        de: 'Eine Mare ist die Quelle von allen Albträumen, Sie wird bei Nacht am stärksten. Es wird erzählt, dass eine Mare den Verstand von Menschen kontrollieren kann.',
-                    },
-                    strength: {
-                        en: 'A Mare will have an increased chance to attack in the dark.',
-                        de: 'Eine Mare hat eine erhöhte Chance anzugreifen wenn Sie sich im Dunkeln aufhalten.',
-                    },
-                    weakness: {
-                        en: 'Turning the lights on around the Mare will lower it\'s chance to attack.',
-                        de: 'Schaltet man die Lichter um eine Mare ein ist die Chance angegriffen zu werden eher gering.',
-                    }
-                },
-                evidence:    [
-                    'box', 'orb', 'temp'
-                ],
-            },
-            revenant:    {
-                name:        {
-                    en: 'Revenant',
-                    de: 'Revenant',
-                },
-                description: {
-                    text:     {
-                        en: 'A Revenant is a slow but violent Ghost that will attack indiscriminately. It has been rumoured to travel at a significantly high speed when hunting.',
-                        de: 'Ein Revenant ist langsam, aber attackiert heftig und wahllos. Gerüchten zufolge ist ein Revenant schneller, wenn er jemanden jagt.',
-                    },
-                    strength: {
-                        en: 'A Revenant will travel at a significantly faster speed when hunting a victim.',
-                        de: 'Wird schneller wenn er sein Opfer jagt.',
-                    },
-                    weakness: {
-                        en: 'Hiding from the Revenant will cause it to move very slowly.',
-                        de: 'Versteckt man sich vor dem Revenant, bewegt er sich sehr langsam.',
-                    }
-                },
-                evidence:    [
-                    'emf', 'finger', 'book'
-                ],
-            },
-            shade:       {
-                name:        {
-                    en: 'Shade',
-                    de: 'Shade',
-                },
-                description: {
-                    text:     {
-                        en: 'A Shade is known to be a Shy Ghost. There is evidence that a Shade will stop all paranormal activity if there are multiple people nearby.',
-                        de: 'Der Shade ist bekannt als ein schüchterner Geist. Wenn mehrere Menschen zusammen sind, werden alle paranormale Aktivitäten gestoppt.',
-                    },
-                    strength: {
-                        en: 'Being shy means the Ghost will be harder to find.',
-                        de: 'Schüchtern zu sein bedeutet es wird schwerer den Geist zu entdecken.',
-                    },
-                    weakness: {
-                        en: 'The Ghost will not enter hunting mode if there is multiple people nearby.',
-                        de: 'Der Geist wird nicht jagen wenn mehrere Menschen zusammen sind.',
-                    }
-                },
-                evidence:    [
-                    'emf', 'orb', 'book'
-                ],
-            },
-            demon:       {
-                name:        {
-                    en: 'Demon',
-                    de: 'Dämon',
-                },
-                description: {
-                    text:     {
-                        en: 'A Demon is one of the worst Ghosts you can encounter. It has been known to attack without a reason.',
-                        de: 'Ein Dämon ist mit einer der schlimmsten Geister die man finden kann. Er ist bekannt dafür, ohne Sinn und Verstand anzugreifen.',
-                    },
-                    strength: {
-                        en: 'Demons will attack more often then any other Ghost.',
-                        de: 'Dämonen greifen viel öfter an, als andere Geister.',
-                    },
-                    weakness: {
-                        en: 'Asking a Demon successful questions on the Ouija Board won\'t lower the users sanity.',
-                        de: 'Erfolgreiche Befragungen des Ouija-Boards über den Dämon verringern nicht den Geisterzustand.',
-                    }
-                },
-                evidence:    [
-                    'box', 'book', 'temp'
-                ],
-            },
-            yurei:       {
-                name:        {
-                    en: 'Yurei',
-                    de: 'Yurei',
-                },
-                description: {
-                    text:     {
-                        en: 'A Yurei is a Ghost that has returned to the physical world, usually for the purpose of revenge or hatred.  ',
-                        de: 'Ein Yurei ist ein Geist der in die physische Welt zurückkehrte, aus Gründen des Hasses oder einer unerfüllten Rache.',
-                    },
-                    strength: {
-                        en: 'Yurei\'s haben einen stärkeren Einfluss auf den Geisteszustand von Menschen.',
-                        de: '',
-                    },
-                    weakness: {
-                        en: 'Smudging the Yurei\'s room will cause it to not wander around the location for a long time.',
-                        de: 'Wenn sie den Raum des Yurei ausräuchern, wird er für längere Zeit seine Bewegung einstellen.',
-                    }
-                },
-                evidence:    [
-                    'orb', 'book', 'temp'
-                ],
-            },
-            oni:         {
-                name:        {
-                    en: 'Oni',
-                    de: 'Oni',
-                },
-                description: {
-                    text:     {
-                        en: 'Oni\'s are a cousin to the Demon and possess extreme strength. There have been rumours that they become more active around their prey.',
-                        de: 'Oni\'s sind Verwandte des Dämons und besitzen unglaubliche Stärke. Gerüchten zufolge sind sie aktiver in der Nähe ihres Opfers.',
-                    },
-                    strength: {
-                        en: 'Oni\'s are more active when people are nearby and have been seen moving objects at great speed.',
-                        de: 'Oni\'s bewegen Objekte mit großer Geschwindigkeit und sind aktiver wenn Leute in der Nähe sind.',
-                    },
-                    weakness: {
-                        en: 'Being more active will make the Oni easier to find and identify.',
-                        de: 'Durch ihre hohe Aktivitätsrate sind Oni\'s leichter zu erkennen.',
-                    }
-                },
-                evidence:    [
-                    'emf', 'box', 'book'
-                ],
-            },
+  let app = {
+    language: 'de',
+    state: {},
+    ghosts: {
+      spirit: {
+        name: {
+          en: 'Spirit',
+          de: 'Spirit',
         },
-        evidences:        {
-            box:    {
-                name: {
-                    en: 'Spirit Box',
-                    de: 'Geisterbox'
-                }
-            },
-            finger: {
-                name: {
-                    en: 'Fingerprints',
-                    de: 'Fingerabdrücke'
-                }
-            },
-            book:   {
-                name: {
-                    en: 'Ghost Writing',
-                    de: 'Geisterbuch'
-                }
-            },
-            temp:   {
-                name: {
-                    en: 'Freezing Temperatures',
-                    de: 'Gefriertemperaturen'
-                }
-            },
-            emf:    {
-                name: {
-                    en: 'EMF Level 5',
-                    de: 'EMF Ebene 5'
-                }
-            },
-            orb:    {
-                name: {
-                    en: 'Ghost Orb',
-                    de: 'Geisterkugel'
-                }
-            },
+        description: {
+          text: {
+            en: 'A spirit is the most common Ghost you will come across however it is still very powerful and dangerous. They are usually discovered at one of their hunting grounds after an unexplained death.',
+            de: 'Der Spirit ist eine der gewöhnlichsten Geisterarten, jedoch ist er sehr stark und gefährlich. Sie werden für gewöhnlich in einem Gebiet gefunden in dem der Tod einer Person unaufgeklärt blieb. ',
+          },
+          strength: {
+            en: '',
+            de: '',
+          },
+          weakness: {
+            en: 'Using Smudge Sticks on a Spirit will stop it attacking for a long period of time.',
+            de: 'Kann vorübergehend gestoppt werden, indem man den Geisterraum ausräuchert.',
+          },
         },
-        initState:        function () {
-            let that = this;
-            Object.keys(that.evidences).forEach(
-                function (evidence) {
-                    that.state[evidence] = '';
-                });
+        evidence: [
+          'box', 'finger', 'book',
+        ],
+      },
+      wraith: {
+        name: {
+          en: 'Wraith',
+          de: 'Gespenst',
         },
-        toggleState:      function (evidence) {
-            console.log(this.state);
-            if (this.state[evidence] === '' || this.state[evidence] === undefined) {
-                this.setState(evidence, 'activated');
-            } else if (this.state[evidence] === 'activated') {
-                this.setState(evidence, 'deactivated');
-            } else {
-                this.setState(evidence, '');
-            }
+        description: {
+          text: {
+            en: 'A wraith is one of the most dangerous Ghosts you will find. It is also the only known Ghost that has the ability of flight and has sometimes been known to travel through walls.',
+            de: 'Ein Gespenst ist einer der gefährlichsten Geister die Sie finden werden. Er ist auch bekannt als der Geist, der fliegen und durch Wände gehen kann.',
+          },
+          strength: {
+            en: 'Wraiths almost never touch the ground meaning it can\'t be tracked by footsteps.',
+            de: 'Ein Gespenst berührt nie den Boden wodurch er nicht durch Fußabdrücke gefunden werden kann.',
+          },
+          weakness: {
+            en: 'Wraiths have a toxic reaction to Salt.',
+            de: 'Giftige Reaktion zu Salz.',
+          },
         },
-        setState:         function (evidence, state) {
-            this.state[evidence] = state;
-            this.updateView();
+        evidence: [
+          'finger', 'temp', 'box',
+        ],
+      },
+      phantom: {
+        name: {
+          en: 'Phantom',
+          de: 'Phantom',
         },
-        init:             function (parent, language) {
-            if (language !== undefined) {
-                this.language = language;
-            }
-            this.initState();
-            this.draw(parent);
+        description: {
+          text: {
+            en: 'A Phantom is a Ghost that can possess the living, most commonly summoned by a Ouija Board. It also induces fear into those around it.',
+            de: 'Ein Phantom ist ein Geist, der von den Lebenden Besitz ergreifen kann. Meistens beschworen durch das Ouijaboard. Verursacht Angst in den Menschen um ihn herum. ',
+          },
+          strength: {
+            en: 'Looking at a Phantom will considerably drop your sanity.',
+            de: 'Senkt ihren Verstand stark wenn Sie das Phantom anschauen.',
+          },
+          weakness: {
+            en: 'Taking a photo of the Phantom will make it temporarily disappear.',
+            de: 'Fotografieren Sie das Phantom, verschwindet es temporär.',
+          },
         },
-        draw:             function (parent) {
-            parent.append(this.buildTable());
-            parent.append(this.buildInfos());
+        evidence: [
+          'emf', 'orb', 'temp',
+        ],
+      },
+      poltergeist: {
+        name: {
+          en: 'Poltergeist',
+          de: 'Poltergeist',
         },
-        compileGhostData: function () {
-            let that = this;
-            let ghostData = {};
-            Object.keys(that.ghosts).forEach(
-                function (ghost) {
-                    ghostData[ghost] = {};
-                    let css = 'ghost-' + ghost;
-                    Object.keys(that.evidences).forEach(
-                        function (evidence) {
-                            css = css + ((that.ghosts[ghost].evidence.indexOf(evidence) === -1) ? ' no-' : ' ');
-                            css = css + 'evidence-' + evidence;
-                        });
-                    ghostData[ghost]['css'] = css;
-                });
+        description: {
+          text: {
+            en: 'One of the most famous Ghosts, a Poltergeist, also known as a noisy ghost can manipulate objects around it to spread fear into it\'s victims.',
+            de: 'Einer der berühmtesten Geister. Ein Poltergeist ist bekannt als ein Wesen das laut ist und Objekte um sich herum manipuliert um seinen Opfern Angst einzujagen.',
+          },
+          strength: {
+            en: 'A Poltergeist can throw huge amounts of objects at once.',
+            de: 'Ein Poltergeist kann viele Objekte auf einmal werfen.',
+          },
+          weakness: {
+            en: 'A Poltergeist is almost ineffective in an empty room.',
+            de: 'Ein Poltergeist ist in einem leeren Raum fast ineffektiv',
+          },
+        },
+        evidence: [
+          'box', 'finger', 'orb',
+        ],
+      },
+      banshee: {
+        name: {
+          en: 'Banshee',
+          de: 'Banshee',
+        },
+        description: {
+          text: {
+            en: 'A Banshee is a natural hunter and will attack anything. It has been known to stalk it\'s prey one at a time until making it\'s kill.',
+            de: 'Die Banshee ist ein Jäger und wird alles attackieren. Es ist bekannt seine Opfer zu stalken bis es jemanden tötet.',
+          },
+          strength: {
+            en: 'A Banshee will only target one person at a time.',
+            de: 'Eine Banshee wird jeweils nur eine Person jagen.',
+          },
+          weakness: {
+            en: 'Banshees fear the Crucifix and will be less aggressive when near one.',
+            de: 'Banshees fürchten das Kruzifix und sind weniger aggressiv in seinem Umkreis.',
+          },
+        },
+        evidence: [
+          'emf', 'finger', 'temp',
+        ],
+      },
+      jinn: {
+        name: {
+          en: 'Jinn',
+          de: 'Dschinn',
+        },
+        description: {
+          text: {
+            en: 'A Jinn is a territorial Ghost that will attack when threatened. It has also been known to be able to travel at significant speed.',
+            de: 'Ein Dschinn ist ein territorialer Geist der bei Bedrängnis angreift. Er ist ebenfalls bekannt dafür, sich mit hoher Geschwindigkeit zu bewegen.',
+          },
+          strength: {
+            en: 'A Jinn will travel at a faster speed if it\'s victim is far away.',
+            de: 'Ein Dschinn bewegt sich schneller wenn sein Opfer weit weg ist.',
+          },
+          weakness: {
+            en: 'Turning off the locations power source will prevent the Jinn from using it\'s ability.',
+            de: 'Dem Ort seinen Strom zu entziehen hindert den Dschinn am nutzen seiner Fähigkeiten.',
+          },
+        },
+        evidence: [
+          'box', 'orb', 'emf',
+        ],
+      },
+      mare: {
+        name: {
+          en: 'Mare',
+          de: 'Mare',
+        },
+        description: {
+          text: {
+            en: 'A Mare is the source of all nightmares, making it most powerful in the dark.',
+            de: 'Eine Mare ist die Quelle von allen Albträumen, Sie wird bei Nacht am stärksten. Es wird erzählt, dass eine Mare den Verstand von Menschen kontrollieren kann.',
+          },
+          strength: {
+            en: 'A Mare will have an increased chance to attack in the dark.',
+            de: 'Eine Mare hat eine erhöhte Chance anzugreifen wenn Sie sich im Dunkeln aufhalten.',
+          },
+          weakness: {
+            en: 'Turning the lights on around the Mare will lower it\'s chance to attack.',
+            de: 'Schaltet man die Lichter um eine Mare ein ist die Chance angegriffen zu werden eher gering.',
+          },
+        },
+        evidence: [
+          'box', 'orb', 'temp',
+        ],
+      },
+      revenant: {
+        name: {
+          en: 'Revenant',
+          de: 'Revenant',
+        },
+        description: {
+          text: {
+            en: 'A Revenant is a slow but violent Ghost that will attack indiscriminately. It has been rumoured to travel at a significantly high speed when hunting.',
+            de: 'Ein Revenant ist langsam, aber attackiert heftig und wahllos. Gerüchten zufolge ist ein Revenant schneller, wenn er jemanden jagt.',
+          },
+          strength: {
+            en: 'A Revenant will travel at a significantly faster speed when hunting a victim.',
+            de: 'Wird schneller wenn er sein Opfer jagt.',
+          },
+          weakness: {
+            en: 'Hiding from the Revenant will cause it to move very slowly.',
+            de: 'Versteckt man sich vor dem Revenant, bewegt er sich sehr langsam.',
+          },
+        },
+        evidence: [
+          'emf', 'finger', 'book',
+        ],
+      },
+      shade: {
+        name: {
+          en: 'Shade',
+          de: 'Shade',
+        },
+        description: {
+          text: {
+            en: 'A Shade is known to be a Shy Ghost. There is evidence that a Shade will stop all paranormal activity if there are multiple people nearby.',
+            de: 'Der Shade ist bekannt als ein schüchterner Geist. Wenn mehrere Menschen zusammen sind, werden alle paranormale Aktivitäten gestoppt.',
+          },
+          strength: {
+            en: 'Being shy means the Ghost will be harder to find.',
+            de: 'Schüchtern zu sein bedeutet es wird schwerer den Geist zu entdecken.',
+          },
+          weakness: {
+            en: 'The Ghost will not enter hunting mode if there is multiple people nearby.',
+            de: 'Der Geist wird nicht jagen wenn mehrere Menschen zusammen sind.',
+          },
+        },
+        evidence: [
+          'emf', 'orb', 'book',
+        ],
+      },
+      demon: {
+        name: {
+          en: 'Demon',
+          de: 'Dämon',
+        },
+        description: {
+          text: {
+            en: 'A Demon is one of the worst Ghosts you can encounter. It has been known to attack without a reason.',
+            de: 'Ein Dämon ist mit einer der schlimmsten Geister die man finden kann. Er ist bekannt dafür, ohne Sinn und Verstand anzugreifen.',
+          },
+          strength: {
+            en: 'Demons will attack more often then any other Ghost.',
+            de: 'Dämonen greifen viel öfter an, als andere Geister.',
+          },
+          weakness: {
+            en: 'Asking a Demon successful questions on the Ouija Board won\'t lower the users sanity.',
+            de: 'Erfolgreiche Befragungen des Ouija-Boards über den Dämon verringern nicht den Geisterzustand.',
+          },
+        },
+        evidence: [
+          'box', 'book', 'temp',
+        ],
+      },
+      yurei: {
+        name: {
+          en: 'Yurei',
+          de: 'Yurei',
+        },
+        description: {
+          text: {
+            en: 'A Yurei is a Ghost that has returned to the physical world, usually for the purpose of revenge or hatred.  ',
+            de: 'Ein Yurei ist ein Geist der in die physische Welt zurückkehrte, aus Gründen des Hasses oder einer unerfüllten Rache.',
+          },
+          strength: {
+            en: 'Yurei\'s haben einen stärkeren Einfluss auf den Geisteszustand von Menschen.',
+            de: '',
+          },
+          weakness: {
+            en: 'Smudging the Yurei\'s room will cause it to not wander around the location for a long time.',
+            de: 'Wenn sie den Raum des Yurei ausräuchern, wird er für längere Zeit seine Bewegung einstellen.',
+          },
+        },
+        evidence: [
+          'orb', 'book', 'temp',
+        ],
+      },
+      oni: {
+        name: {
+          en: 'Oni',
+          de: 'Oni',
+        },
+        description: {
+          text: {
+            en: 'Oni\'s are a cousin to the Demon and possess extreme strength. There have been rumours that they become more active around their prey.',
+            de: 'Oni\'s sind Verwandte des Dämons und besitzen unglaubliche Stärke. Gerüchten zufolge sind sie aktiver in der Nähe ihres Opfers.',
+          },
+          strength: {
+            en: 'Oni\'s are more active when people are nearby and have been seen moving objects at great speed.',
+            de: 'Oni\'s bewegen Objekte mit großer Geschwindigkeit und sind aktiver wenn Leute in der Nähe sind.',
+          },
+          weakness: {
+            en: 'Being more active will make the Oni easier to find and identify.',
+            de: 'Durch ihre hohe Aktivitätsrate sind Oni\'s leichter zu erkennen.',
+          },
+        },
+        evidence: [
+          'emf', 'box', 'book',
+        ],
+      },
+    },
+    evidences: {
+      box: {
+        name: {
+          en: 'Spirit Box',
+          de: 'Geisterbox',
+        },
+      },
+      finger: {
+        name: {
+          en: 'Fingerprints',
+          de: 'Fingerabdrücke',
+        },
+      },
+      book: {
+        name: {
+          en: 'Ghost Writing',
+          de: 'Geisterbuch',
+        },
+      },
+      temp: {
+        name: {
+          en: 'Freezing Temperatures',
+          de: 'Gefriertemperaturen',
+        },
+      },
+      emf: {
+        name: {
+          en: 'EMF Level 5',
+          de: 'EMF Ebene 5',
+        },
+      },
+      orb: {
+        name: {
+          en: 'Ghost Orb',
+          de: 'Geisterkugel',
+        },
+      },
+    },
+    initState: function () {
+      let that = this
+      Object.keys(that.evidences).forEach(
+        function (evidence) {
+          that.state[evidence] = ''
+        })
+    },
+    toggleState: function (evidence) {
+      console.log(this.state)
+      if (this.state[evidence] === '' || this.state[evidence] === undefined) {
+        this.setState(evidence, 'activated')
+      } else if (this.state[evidence] === 'activated') {
+        this.setState(evidence, 'deactivated')
+      } else {
+        this.setState(evidence, '')
+      }
+    },
+    setState: function (evidence, state) {
+      this.state[evidence] = state
+      this.updateView()
+    },
+    init: function (parent, language) {
+      if (language !== undefined) {
+        this.language = language
+      }
+      this.initState()
+      this.draw(parent)
+    },
+    draw: function (parent) {
+      parent.append(this.buildTable())
+      parent.append(this.buildInfos())
+    },
+    compileGhostData: function () {
+      let that = this
+      let ghostData = {}
+      Object.keys(that.ghosts).forEach(
+        function (ghost) {
+          ghostData[ghost] = {}
+          let css = 'ghost-' + ghost
+          Object.keys(that.evidences).forEach(
+            function (evidence) {
+              css = css + ((that.ghosts[ghost].evidence.indexOf(evidence) === -1) ? ' no-' : ' ')
+              css = css + 'evidence-' + evidence
+            })
+          ghostData[ghost]['css'] = css
+        })
 
-            return ghostData;
-        },
-        buildTable:       function () {
-            let ghostData = this.compileGhostData();
-            let table = document.createElement('table');
-            table.append(this.buildTableHeader(ghostData));
-            table.append(this.buildTableBody(ghostData));
+      return ghostData
+    },
+    buildTable: function () {
+      let ghostData = this.compileGhostData()
+      let table = document.createElement('table')
+      table.append(this.buildTableHeader(ghostData))
+      table.append(this.buildTableBody(ghostData))
 
-            return table;
-        },
-        buildTableHeader: function (ghostData) {
-            let that = this;
-            let head = document.createElement('thead');
+      return table
+    },
+    buildTableHeader: function (ghostData) {
+      let that = this
+      let head = document.createElement('thead')
 
-            let row = document.createElement('tr');
-            row.classList.add('header');
+      let row = document.createElement('tr')
+      row.classList.add('header')
 
-            let cell = document.createElement('th');
-            cell.classList.add('header');
-            row.append(cell);
+      let cell = document.createElement('th')
+      cell.classList.add('header')
+      row.append(cell)
 
-            Object.keys(that.ghosts).forEach(
-                function (ghost) {
-                    cell = document.createElement('th');
-                    cell.innerText = that.ghosts[ghost].name[that.language];
-                    cell.setAttribute('class', ghostData[ghost].css);
-                    row.append(cell);
-                });
+      Object.keys(that.ghosts).forEach(
+        function (ghost) {
+          cell = document.createElement('th')
+          cell.innerText = that.ghosts[ghost].name[that.language]
+          cell.setAttribute('class', ghostData[ghost].css)
+          row.append(cell)
+        })
 
-            head.append(row);
-            return head;
-        },
-        buildTableBody:   function (ghostData) {
-            let that = this;
-            let body = document.createElement('tbody');
-            Object.keys(that.evidences).forEach(
-                function (evidence) {
-                    body.append(that.buildRow(ghostData, evidence));
-                });
-            return body;
-        },
-        buildRow:         function (ghostData, evidence) {
-            let that = this;
-            let row = document.createElement('tr');
-            row.id = 'evidence-' + evidence;
-            row.setAttribute('data-evidence', evidence);
-            row.setAttribute('class', '');
-            row.onclick = function (event) {
-                let target = event.target;
-                let evidence = target.getAttribute('data-evidence');
-                if (evidence !== undefined) {
-                    that.toggleState(evidence);
-                }
-            };
+      head.append(row)
+      return head
+    },
+    buildTableBody: function (ghostData) {
+      let that = this
+      let body = document.createElement('tbody')
+      Object.keys(that.evidences).forEach(
+        function (evidence) {
+          body.append(that.buildRow(ghostData, evidence))
+        })
+      return body
+    },
+    buildRow: function (ghostData, evidence) {
+      let that = this
+      let row = document.createElement('tr')
+      row.id = 'evidence-' + evidence
+      row.setAttribute('data-evidence', evidence)
+      row.setAttribute('class', '')
+      row.onclick = function (event) {
+        let target = event.target
+        let evidence = target.getAttribute('data-evidence')
+        if (evidence !== undefined) {
+          that.toggleState(evidence)
+        }
+      }
 
-            cell = document.createElement('td');
-            cell.innerText = that.evidences[evidence].name[that.language];
-            cell.setAttribute('data-evidence', evidence);
-            cell.setAttribute('class', 'header');
+      cell = document.createElement('td')
+      cell.innerText = that.evidences[evidence].name[that.language]
+      cell.setAttribute('data-evidence', evidence)
+      cell.setAttribute('class', 'header')
 
-            row.append(cell);
+      row.append(cell)
 
-            Object.keys(that.ghosts).forEach(
-                function (ghost) {
-                    cell = document.createElement('td');
-                    cell.innerText = that.ghosts[ghost].evidence.indexOf(evidence) !== -1 ? 'X' : '';
-                    cell.setAttribute('class', ghostData[ghost].css);
-                    cell.setAttribute('data-evidence', evidence);
-                    row.append(cell);
-                });
-            return row;
-        },
-        buildInfos:       function () {
-            let that = this;
-            let infos = document.createElement('div');
-            infos.id = 'infos';
-            Object.keys(this.ghosts).forEach(function (ghost) {
-                let page = document.createElement('div');
-                page.classList.add('ghost-' + ghost);
+      Object.keys(that.ghosts).forEach(
+        function (ghost) {
+          cell = document.createElement('td')
+          cell.innerText = that.ghosts[ghost].evidence.indexOf(evidence) !== -1 ? 'X' : ''
+          cell.setAttribute('class', ghostData[ghost].css)
+          cell.setAttribute('data-evidence', evidence)
+          row.append(cell)
+        })
+      return row
+    },
+    buildInfos: function () {
+      let that = this
+      let infos = document.createElement('div')
+      infos.id = 'infos'
+      Object.keys(this.ghosts).forEach(function (ghost) {
+        let page = document.createElement('div')
+        page.classList.add('ghost-' + ghost)
 
-                let headline = document.createElement('h2');
-                headline.classList.add('headline');
-                headline.textContent = that.ghosts[ghost].name[that.language];
-                page.append(headline);
+        let headline = document.createElement('h2')
+        headline.classList.add('headline')
+        headline.textContent = that.ghosts[ghost].name[that.language]
+        page.append(headline)
 
-                let description = document.createElement('span');
-                description.classList.add('description');
-                description.textContent = that.ghosts[ghost].description.text[that.language];
-                page.append(description);
+        let description = document.createElement('span')
+        description.classList.add('description')
+        description.textContent = that.ghosts[ghost].description.text[that.language]
+        page.append(description)
 
-                let strength = document.createElement('span');
-                strength.classList.add('strength');
-                strength.textContent = that.ghosts[ghost].description.strength[that.language];
-                page.append(strength);
+        let strength = document.createElement('span')
+        strength.classList.add('strength')
+        strength.textContent = that.ghosts[ghost].description.strength[that.language]
+        page.append(strength)
 
-                let weakness = document.createElement('span');
-                weakness.classList.add('weakness');
-                weakness.textContent = that.ghosts[ghost].description.weakness[that.language];
-                page.append(weakness);
+        let weakness = document.createElement('span')
+        weakness.classList.add('weakness')
+        weakness.textContent = that.ghosts[ghost].description.weakness[that.language]
+        page.append(weakness)
 
-                infos.append(page);
-            });
+        infos.append(page)
+      })
 
-            return infos;
-        },
-        updateView:       function () {
-            this.setEvidenceStyle();
-            this.setGhostStyle();
-        },
-        setEvidenceStyle: function () {
-            let that = this;
-            Object.keys(this.evidences).forEach(
-                function (evidence) {
-                    state = that.state[evidence];
-                    row = document.getElementById('evidence-' + evidence);
-                    if (state === 'activated') {
-                        row.classList.add('activated');
-                        row.classList.remove('deactivated');
-                    } else if (state === 'deactivated') {
-                        row.classList.remove('activated');
-                        row.classList.add('deactivated');
-                    } else {
-                        row.classList.remove('activated');
-                        row.classList.remove('deactivated');
-                    }
-                });
-        },
-        setGhostStyle:    function () {
-            let that = this;
-            Object.keys(this.ghosts).forEach(
-                function (ghost) {
-                    let state = Object.keys(that.evidences).filter(
-                        function (evidence) {
-                            if (that.state[evidence] === 'activated') {
-                                return that.ghosts[ghost].evidence.indexOf(evidence) === -1;
-                            }
-                            if (that.state[evidence] === 'deactivated') {
-                                return that.ghosts[ghost].evidence.indexOf(evidence) !== -1;
-                            }
-                            return false;
-                        }).length === 0;
-                    let elements = document.getElementsByClassName('ghost-' + ghost);
-                    if (state) {
-                        that.removeClass(elements, 'excluded');
-                    } else {
-                        that.addClass(elements, 'excluded');
-                    }
-                });
-        },
-        removeClass:      function (elements, className) {
-            for (let i = 0; i < elements.length; i++) {
-                elements[i].classList.remove(className);
-            }
-        },
-        addClass:         function (elements, className) {
-            for (let i = 0; i < elements.length; i++) {
-                elements[i].classList.add(className);
-                console.log(className);
-            }
-        },
-    };
-    app.init(document.body);
+      return infos
+    },
+    updateView: function () {
+      this.setEvidenceStyle()
+      this.setGhostStyle()
+    },
+    setEvidenceStyle: function () {
+      let that = this
+      Object.keys(this.evidences).forEach(
+        function (evidence) {
+          state = that.state[evidence]
+          row = document.getElementById('evidence-' + evidence)
+          if (state === 'activated') {
+            row.classList.add('activated')
+            row.classList.remove('deactivated')
+          } else if (state === 'deactivated') {
+            row.classList.remove('activated')
+            row.classList.add('deactivated')
+          } else {
+            row.classList.remove('activated')
+            row.classList.remove('deactivated')
+          }
+        })
+    },
+    setGhostStyle: function () {
+      let that = this
+      Object.keys(this.ghosts).forEach(
+        function (ghost) {
+          let state = Object.keys(that.evidences).filter(
+            function (evidence) {
+              if (that.state[evidence] === 'activated') {
+                return that.ghosts[ghost].evidence.indexOf(evidence) === -1
+              }
+              if (that.state[evidence] === 'deactivated') {
+                return that.ghosts[ghost].evidence.indexOf(evidence) !== -1
+              }
+              return false
+            }).length === 0
+          let elements = document.getElementsByClassName('ghost-' + ghost)
+          if (state) {
+            that.removeClass(elements, 'excluded')
+          } else {
+            that.addClass(elements, 'excluded')
+          }
+        })
+    },
+    removeClass: function (elements, className) {
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].classList.remove(className)
+      }
+    },
+    addClass: function (elements, className) {
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].classList.add(className)
+        console.log(className)
+      }
+    },
+  }
+  app.init(document.body)
 </script>
 </body>
 </html>
